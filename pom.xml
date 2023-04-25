@@ -15,7 +15,6 @@
         <hadoop.version>3.3.0</hadoop.version>
         <hbase.version>2.4.14</hbase.version>
         <hive.version>2.3.8</hive.version>
-        <sqoop.version>1.4.6</sqoop.version>
     </properties>
 
     <dependencies>
@@ -104,13 +103,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!--本地操作Linux指令-->
-        <dependency>
-            <groupId>org.jvnet.hudson</groupId>
-            <artifactId>ganymed-ssh2</artifactId>
-            <version>build210-hudson-1</version>
-        </dependency>
-
         <!--文件上传-->
         <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
         <dependency>
@@ -124,6 +116,13 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.5</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.0.32</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->

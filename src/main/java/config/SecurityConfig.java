@@ -3,13 +3,14 @@ package config;
 import java.util.ArrayList;
 import java.util.List;
 
+import static config.Config.WEB_URL_BEGIN;
+
 /**
  * @author 连仕杰
  */
 public class SecurityConfig {
     private static List<String> uriList;
 
-    private static String URL = "http://localhost:8080/Group4Project";
     /**
      * 放行的接口：
      * 登录
@@ -18,10 +19,10 @@ public class SecurityConfig {
      * */
     static{
         uriList = new ArrayList<>();
-        uriList.add(URL + "/index.html");
-        uriList.add(URL + "/up.html");
-        uriList.add(URL + "/SignUp");
-        uriList.add(URL + "/SignIn");
+        uriList.add(WEB_URL_BEGIN + "/index.html");
+        uriList.add(WEB_URL_BEGIN + "/up.html");
+        uriList.add(WEB_URL_BEGIN + "/SignUp");
+        uriList.add(WEB_URL_BEGIN + "/SignIn");
     }
 
     public static List<String> getUriList() {

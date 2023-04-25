@@ -29,7 +29,7 @@ public class UserDao{
 
     public static User login(String username, String password){
         try {
-            if(signIn(username,password)){
+            if(signIn(username, password)){
                 User user = new User();
                 user.setName(username);
                 user.setPassword(password);

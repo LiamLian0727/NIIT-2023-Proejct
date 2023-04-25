@@ -45,9 +45,9 @@
         <img src="../image/background1.jpg" alt="">
         <div class="content">
             <a name="view"></a>
-            <h3>Account</h3>
-            <p>You can an analysis of the account</p>
-            <a href="./account.jsp" class="btn">Enter</a>
+            <h3>ToHDFS</h3>
+            <p>Using sqoop import data from MySQL to HDFS</p>
+            <a href="./hdfs_result.jsp" class="btn">Enter</a>
         </div>
     </div>
 
@@ -55,26 +55,26 @@
         <img src="../image/background3.jpg" alt="">
         <div class="content">
             <h3>TopN</h3>
-            <p>You can an analysis of the top</p>
-            <a href="./top.jsp" class="btn">enter</a>
+            <p>Using sqoop import data from MySQL to Hive</p>
+            <a href="./hive_result.jsp" class="btn">enter</a>
         </div>
     </div>
 
     <div class="banner">
         <img src="../image/background4.jpg" alt="">
         <div class="content">
-            <h3>Average</h3>
-            <p>You can an analysis of the average</p>
-            <a href="./average.jsp" class="btn">enter</a>
+            <h3>Flume1</h3>
+            <p>Function Flume1 is coming soon</p>
+            <a href="./flume1.jsp" class="btn">enter</a>
         </div>
     </div>
 
     <div class="banner">
         <img src="../image/background.jpg" alt="">
         <div class="content">
-            <h3>Sum</h3>
-            <p>You can an analysis of the sum</p>
-            <a href="./sum.jsp" class="btn">enter</a>
+            <h3>Flume2</h3>
+            <p>Function Flume2 is coming soon</p>
+            <a href="./flume2.jsp" class="btn">enter</a>
         </div>
     </div>
 

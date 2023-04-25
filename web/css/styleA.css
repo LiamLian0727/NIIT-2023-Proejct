@@ -190,7 +190,7 @@ section {
     margin-top: 15px;
     border: 1px solid #ccc;
     border-radius: 400px;
-    box-sizing: border-box;
+    /*box-sizing: border-box;*/
     text-transform: lowercase;
 }
 
@@ -230,7 +230,7 @@ option {
     margin-top: 15px;
     text-transform: uppercase;
     color: #6b74c4;
-    letter-spacing: 8px;
+    letter-spacing: 2px;
 }
 
 .divs {

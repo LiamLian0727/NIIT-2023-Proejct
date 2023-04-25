@@ -20,9 +20,9 @@ public class PutDataToHdfs {
     static {
         try {
             fs = FileSystem.get(
-                    new URI(URI_LINE),
+                    new URI(HDFS_URI_LINE),
                     new Configuration(),
-                    USER);
+                    HDFS_USER);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

@@ -1,6 +1,7 @@
-package servlet;
+package servlet.user;
 
 import model.User;
+import servlet.IUserService;
 import servlet.impl.UserServiceImpl;
 
 import javax.servlet.annotation.WebServlet;
@@ -25,10 +26,10 @@ public class SignIn extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String name = request.getParameter("Username");
+        System.out.println(name);
         if ("".equals(name)) {
             response.sendRedirect(URL_INDEX + "?error=UsernameNull");
         } else {
-
             String password = request.getParameter("Password");
             IUserService userService = new UserServiceImpl();
             User user = null;

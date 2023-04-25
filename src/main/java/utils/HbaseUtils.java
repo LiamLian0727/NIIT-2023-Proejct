@@ -3,8 +3,6 @@ package utils;
 import com.alibaba.fastjson.JSONObject;
 import model.MostPopularVo;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hbase.Cell;
-import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.mapreduce.TableMapReduceUtil;
@@ -30,7 +28,7 @@ public class HbaseUtils {
     public static Configuration init() {
         Configuration con = new Configuration();
         con.set("hbase.zookeeper.quorum", ZOOKEEPER_QUOEUM);
-        System.setProperty("HADOOP_USER_NAME", USER);
+        System.setProperty("HADOOP_USER_NAME", DATABASE_USER);
         return con;
     }
 

@@ -1,4 +1,4 @@
-package servlet;
+package servlet.user;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +14,7 @@ import static config.Config.WEB_URL_BEGIN;
  */
 @WebServlet(urlPatterns = "/Exit")
 public class Exit extends HttpServlet {
-   static final String URL = WEB_URL_BEGIN + "index.html";
+    static final String URL = WEB_URL_BEGIN + "index.html";
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if(request.getSession().getAttribute("user") != null){

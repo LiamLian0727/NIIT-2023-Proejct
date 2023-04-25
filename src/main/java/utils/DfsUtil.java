@@ -29,7 +29,7 @@ public class DfsUtil {
     }
 
     public static FileSystem getFs() throws URISyntaxException, IOException, InterruptedException {
-        fs = FileSystem.get(new URI(URI_LINE), con, USER);
+        fs = FileSystem.get(new URI(HDFS_URI_LINE), con, HDFS_USER);
         return fs;
     }
 

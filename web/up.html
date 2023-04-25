@@ -26,7 +26,7 @@
     </div>
     <!-- 设置二维码 -->
     <div class="f">
-        <form action="UpdateToHDFS" class="content" method="post" enctype="multipart/form-data">
+        <form action="UpdateToMySQL" class="content" method="post" enctype="multipart/form-data">
             <input name="toHDFS" id="default-btn" type="file" hidden onchange="change()"/>
             <div class="btn">
                 <button type="button" onclick="active()" id="custom-btn">Choose a file</button>
@@ -44,8 +44,8 @@
     function error() {
         let query = window.location.search.substring(1);
         let pair = query.split("=");
-        if (pair[1] === 'notUp') {
-            alert("Error, Please Up Date to HDFS");
+        if (pair[0] == 'message'){
+            alert(pair[1]);
         }
     }
 

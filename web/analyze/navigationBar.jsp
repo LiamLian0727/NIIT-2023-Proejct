@@ -22,10 +22,10 @@
 
         <nav class="navbar">
             <a href="index.jsp">home</a>
-            <a href="account.jsp">account</a>
-            <a href="top.jsp">top</a>
-            <a href="average.jsp">average</a>
-            <a href="sum.jsp">sum</a>
+            <a href="hdfs_result.jsp">ToHDFS</a>
+            <a href="hive_result.jsp">ToHive</a>
+            <a href="flume1.jsp">Flume1</a>
+            <a href="flume2.jsp">Flume2</a>
         </nav>
 
         <div class="dropdown">

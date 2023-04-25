@@ -1,4 +1,4 @@
-package servlet;
+package servlet.sqoop;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -50,8 +50,7 @@ public class UpdateToHDFS extends HttpServlet {
      */
 
     @Override
-    protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         if (! ( KV[1].equals( session.getAttribute( KV[0] ) ) ) ) {
             // 检测是否为多媒体上传
@@ -73,22 +72,20 @@ public class UpdateToHDFS extends HttpServlet {
             boolean b = false;
             try {
                 List<FileItem> formItems = upload.parseRequest(request);
-
                 if (formItems != null && formItems.size() > 0) {
                     for (FileItem item : formItems) {
                         if (!item.isFormField()) {
                             String fileName = new File(item.getName()).getName();
                             b = DfsUtil.putFilesInToHDFSUtil(item.getInputStream(), fileName);
                             if (b) {
-                                dataFromCsvToHbase("hdfs://niit:9000" + DfsUtil.getPATH() + fileName);
+                                dataFromCsvToHbase(HDFS_URI_LINE + DfsUtil.getPATH() + fileName);
                             }
                         }
                     }
                 }
                 session.setAttribute(KV[0], KV[1]);
             } catch (Exception ex) {
-                request.setAttribute("message",
-                        "错误信息: " + ex.getMessage());
+                request.setAttribute("message","错误信息: " + ex.getMessage());
             }
         }
         response.sendRedirect(URL);

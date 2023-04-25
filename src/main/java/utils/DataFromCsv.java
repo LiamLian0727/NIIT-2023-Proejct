@@ -114,7 +114,7 @@ public class DataFromCsv {
 
     public static void main(String[] args) {
         try {
-            dataFromCsvToHbase("hdfs://niit:9000/IMDb_movies.csv");
+            dataFromCsvToHbase(HDFS_URI_LINE + "IMDb_movies.csv");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (URISyntaxException e) {
