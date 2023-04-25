@@ -12,7 +12,7 @@ NIIT 2022 Proejct B3B4 Group2
 >
 **First: get our code**
 ```bash
-git -clone https://github.com/LiamLian0727/Group1.git
+git -clone https://gitee.com/lian-shijie/Group1.git
 ```
 
 ***Make by 2023/4/19***
