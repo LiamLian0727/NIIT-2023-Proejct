@@ -39,9 +39,11 @@ public class Config {
     public static final String DATABASE_NAME = "niit";
     // 默认JDBC使用本地LOCALHOST作为MySQL服务器
     public static final String JDBC_URL = "jdbc:mysql://" + LOCALHOST + "/" + DATABASE_NAME +
-            "?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&useSSL=false";
+            "?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&useSSL=false&rewriteBatchedStatements=true";
     public static final String DATABASE_USER = "root";
     public static final String DATABASE_PASSWORD = "niit1234";
+    public static final int BATCH_LINE = 500;
+    public static final int MAX_LINE = 10000;
 
     // web config
     public static final String WEB_URL_BEGIN = "http://localhost:8080/Group1Project/";

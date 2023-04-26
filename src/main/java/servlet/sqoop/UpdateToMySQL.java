@@ -51,10 +51,8 @@ public class UpdateToMySQL extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
-        if (!(KV[1].equals(session.getAttribute(KV[0])))) {
-            // 检测是否为多媒体上传
-            if (!ServletFileUpload.isMultipartContent(request)) {
-                // 如果不是则停止
+        if (!(KV[1].equals(session.getAttribute(KV[0])))) { // 检测是否为多媒体上传
+            if (!ServletFileUpload.isMultipartContent(request)) { // 如果不是则停止
                 PrintWriter writer = response.getWriter();
                 writer.println("Error: form must have enctype=multipart/form-data");
                 writer.flush();
@@ -84,6 +82,7 @@ public class UpdateToMySQL extends HttpServlet {
                     }
                 }
             } catch (Exception ex) {
+                ex.printStackTrace();
                 request.setAttribute("message", "错误信息: " + ex.getMessage());
             }
         }
