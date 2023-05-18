@@ -14,6 +14,15 @@ NIIT 2023 Proejct B3 Group1
 ```bash
 git -clone https://gitee.com/lian-shijie/Group1.git
 ```
+**Second: strat hadoop system**
+```bash
+start-all.sh
+```
+**Third: strat flume agent**
+```bash
+cd flume
+flume-ng agent -n agent -f flume/http-conf.properties
+```
 
 ***Make by 2023/4/26***
  
