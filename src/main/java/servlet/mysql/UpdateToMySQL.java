@@ -1,9 +1,8 @@
-package servlet.sqoop;
+package servlet.mysql;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import utils.DfsUtil;
 import utils.MySqlUtils;
 
 import javax.servlet.ServletException;
@@ -18,7 +17,6 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import static config.Config.*;
-import static utils.DataFromCsv.dataFromCsvToHbase;
 
 
 /**
@@ -73,6 +71,7 @@ public class UpdateToMySQL extends HttpServlet {
                     for (FileItem item : formItems) {
                         if (!item.isFormField()) {
                             String fileName = new File(item.getName()).getName();
+
                             if (MySqlUtils.putFilesInToMySQL(item.getInputStream(), fileName)) {
                                 session.setAttribute(KV[0], KV[1]);
                             } else {

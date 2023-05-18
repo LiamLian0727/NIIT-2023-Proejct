@@ -817,8 +817,7 @@ SELECT|sys.sys_config:null
     </column>
     <column id="254" parent="242" name="imdb_title_id">
       <Position>1</Position>
-      <DataType>varchar(256)|0s</DataType>
-      <NotNull>1</NotNull>
+      <DataType>text|0s</DataType>
     </column>
     <column id="255" parent="242" name="title">
       <Position>2</Position>
@@ -904,86 +903,81 @@ SELECT|sys.sys_config:null
       <Position>22</Position>
       <DataType>text|0s</DataType>
     </column>
-    <key id="276" parent="242" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>imdb_title_id</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="277" parent="243" name="Sid">
+    <column id="276" parent="243" name="Sid">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="278" parent="243" name="Name">
+    <column id="277" parent="243" name="Name">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="279" parent="243" name="Email">
+    <column id="278" parent="243" name="Email">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="280" parent="243" name="gender">
+    <column id="279" parent="243" name="gender">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <key id="281" parent="243" name="PRIMARY">
+    <key id="280" parent="243" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Sid</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="282" parent="244" name="id">
+    <column id="281" parent="244" name="id">
       <Position>1</Position>
       <DataType>int(10) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="283" parent="244" name="username">
+    <column id="282" parent="244" name="username">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="284" parent="244" name="password">
+    <column id="283" parent="244" name="password">
       <Position>3</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="285" parent="244" name="sex">
+    <column id="284" parent="244" name="sex">
       <Position>4</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="286" parent="244" name="email">
+    <column id="285" parent="244" name="email">
       <Position>5</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="287" parent="244" name="tel">
+    <column id="286" parent="244" name="tel">
       <Position>6</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="288" parent="244" name="PRIMARY">
+    <key id="287" parent="244" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="289" parent="245" name="UserName">
+    <column id="288" parent="245" name="UserName">
       <Position>1</Position>
       <DataType>varchar(20)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="290" parent="245" name="Password">
+    <column id="289" parent="245" name="Password">
       <Position>2</Position>
       <DataType>varchar(20)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="291" parent="245" name="EmailID">
+    <column id="290" parent="245" name="EmailID">
       <Position>3</Position>
       <DataType>varchar(20)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="292" parent="245" name="PRIMARY">
+    <key id="291" parent="245" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>UserName</ColNames>
       <Primary>1</Primary>

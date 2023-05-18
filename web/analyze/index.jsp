@@ -47,34 +47,34 @@
             <a name="view"></a>
             <h3>ToHDFS</h3>
             <p>Using sqoop import data from MySQL to HDFS</p>
-            <a href="./hdfs_result.jsp" class="btn">Enter</a>
+            <a href="sqoop_mysql_to_hdfs.jsp" class="btn">Enter</a>
         </div>
     </div>
 
     <div class="banner">
         <img src="../image/background3.jpg" alt="">
         <div class="content">
-            <h3>TopN</h3>
+            <h3>ToHive</h3>
             <p>Using sqoop import data from MySQL to Hive</p>
-            <a href="./hive_result.jsp" class="btn">enter</a>
+            <a href="sqoop_mysql_to_hive.jsp" class="btn">enter</a>
         </div>
     </div>
 
     <div class="banner">
         <img src="../image/background4.jpg" alt="">
         <div class="content">
-            <h3>Flume1</h3>
+            <h3>UpMySQL</h3>
             <p>Function Flume1 is coming soon</p>
-            <a href="./flume1.jsp" class="btn">enter</a>
+            <a href="flume_mysql_to_hdfs.jsp" class="btn">enter</a>
         </div>
     </div>
 
     <div class="banner">
         <img src="../image/background.jpg" alt="">
         <div class="content">
-            <h3>Flume2</h3>
+            <h3>UpLog</h3>
             <p>Function Flume2 is coming soon</p>
-            <a href="./flume2.jsp" class="btn">enter</a>
+            <a href="flume_window_to_hdfs.jsp" class="btn">enter</a>
         </div>
     </div>
 

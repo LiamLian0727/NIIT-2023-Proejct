@@ -1,16 +1,9 @@
 package utils;
 
-import org.apache.hadoop.fs.FSDataOutputStream;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.hbase.util.Bytes;
-import org.apache.hadoop.io.IOUtils;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URISyntaxException;
 import java.sql.*;
 import java.util.Arrays;
 
@@ -27,26 +20,110 @@ public class MySqlUtils {
     private static String csvSplitBy = ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
 
     public static Connection createConnection() throws SQLException, ClassNotFoundException {
-
         Connection con;
         Class.forName(JDBC);
         con = DriverManager.getConnection(JDBC_URL, DATABASE_USER, DATABASE_PASSWORD);
         return con;
     }
 
+    public static boolean isTableExist(Connection conn, String tableName) throws SQLException {
+        boolean isExist = false;
+        DatabaseMetaData metaData = conn.getMetaData();
+        ResultSet rs = metaData.getTables(null, null, tableName, new String[]{"TABLE"});
+        if (rs.next()) {
+            isExist = true;
+        }
+        rs.close();
+        return isExist;
+    }
+
+    public static void dropTable(Connection conn, String tableName) throws SQLException {
+        String dropTableSql = "DROP TABLE IF EXISTS " + tableName;
+        Statement stmt = conn.createStatement();
+        stmt.executeUpdate(dropTableSql);
+        System.out.println("Table " + tableName + " dropped successfully.");
+        stmt.close();
+    }
+
+    public static String createTable(String tableName, String[] columnNames) throws SQLException {
+        Connection conn = null;
+        Statement stmt = null;
+        String columnTypes = "text";
+        String insertTableSql = null;
+        try {
+            conn = createConnection();
+            if (isTableExist(conn, tableName)) {
+                dropTable(conn, tableName);
+            }
+
+            StringBuilder sb = new StringBuilder();
+            sb.append("CREATE TABLE `").append(tableName).append("` (");
+            for (int i = 0; i < columnNames.length; i++) {
+                sb.append("`").append(columnNames[i]).append("` ").append(columnTypes);
+                if (i < columnNames.length - 1) {
+                    sb.append(", ");
+                }
+            }
+            sb.append(");");
+            String createTableSql = sb.toString();
+
+            // 执行建表语句
+            stmt = conn.createStatement();
+            stmt.executeUpdate(createTableSql);
+
+            System.out.println("Table " + tableName + " created successfully.");
+
+            // 构造插入语句
+            StringBuilder sq = new StringBuilder();
+            sq.append("INSERT INTO ").append(tableName).append(" (");
+            for (int i = 0; i < columnNames.length; i++) {
+                sq.append(columnNames[i]);
+                if (i < columnNames.length - 1) {
+                    sq.append(", ");
+                } else {
+                    sq.append(") ");
+                }
+            }
+            sq.append("VALUE ").append(" (");
+            for (int i = 0; i < columnNames.length; i++) {
+                sq.append("?");
+                if (i < columnNames.length - 1) {
+                    sq.append(", ");
+                } else {
+                    sq.append("); ");
+                }
+            }
+
+            insertTableSql = sq.toString();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // 关闭数据库连接和 Statement 对象
+            stmt.close();
+            conn.close();
+        }
+        return insertTableSql;
+
+    }
+
     public static boolean putFilesInToMySQL(InputStream fin, String fileName) throws SQLException, ClassNotFoundException, IOException {
+        PreparedStatement statement = null;
         boolean is_successful = true;
         int count = 0;
         System.out.println(fileName);
-        String sql = "INSERT INTO imdb_movies(imdb_title_id, title, original_title, year, date_published, genre, duration, country, language, director, writer, production_company, actors, description, avg_vote, votes, budget, usa_gross_income, worlwide_gross_income, metascore, reviews_from_users, reviews_from_critics) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
         Connection connection = createConnection();
         connection.setAutoCommit(false);
-        PreparedStatement statement = connection.prepareStatement(sql);
-        try(BufferedReader reader = new BufferedReader(new InputStreamReader(fin))) {
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(fin))) {
             line = reader.readLine();
             title = line.split(csvSplitBy);
-            System.out.println("title :" + Arrays.toString(title));
+            String insertSql = createTable(TABLE_NAME, title);
+            statement = connection.prepareStatement(insertSql);
+
             while ((line = reader.readLine()) != null) {
                 row = line.split(csvSplitBy);
                 for (int i = 0; i < row.length; i++) {
@@ -58,22 +135,22 @@ public class MySqlUtils {
                     }
                 }
                 statement.addBatch();
-                if(count != 0 && count % BATCH_LINE == 0){
+                if (count != 0 && count % BATCH_LINE == 0) {
                     statement.executeBatch();
                 }
-                count ++;
-                if (count == MAX_LINE){
+                count++;
+                if (count == MAX_LINE) {
                     statement.executeBatch();
                     break;
                 }
             }
-            if(count < MAX_LINE){
+            if (count < MAX_LINE) {
                 statement.executeBatch();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             is_successful = false;
-        }finally {
+        } finally {
             statement.close();
             connection.setAutoCommit(true);
             connection.close();

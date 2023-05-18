@@ -1,13 +1,19 @@
 package utils;
 
+import model.Result;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static config.Config.*;
 
 public class SqoopUtils {
 
-    public static void sqoopExec(String sqoopCommand){
+    public static String sqoopExec(String sqoopCommand){
         SSHShellUtils shell = new SSHShellUtils(ZOOKEEPER_QUOEUM, LINUX_USER_NAME, LINUX_USER_PASSWORD);
         String execLog = shell.execCommand(sqoopCommand);
         System.out.println(execLog);
+        return execLog;
     }
 
     public static void main(String[] args) {

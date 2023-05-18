@@ -22,10 +22,10 @@
 
         <nav class="navbar">
             <a href="index.jsp">home</a>
-            <a href="hdfs_result.jsp">ToHDFS</a>
-            <a href="hive_result.jsp">ToHive</a>
-            <a href="flume1.jsp">Flume1</a>
-            <a href="flume2.jsp">Flume2</a>
+            <a href="sqoop_mysql_to_hdfs.jsp">ToHDFS</a>
+            <a href="sqoop_mysql_to_hive.jsp">ToHive</a>
+            <a href="flume_mysql_to_hdfs.jsp">UpMySQL</a>
+            <a href="flume_window_to_hdfs.jsp">UpLog</a>
         </nav>
 
         <div class="dropdown">

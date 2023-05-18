@@ -13,16 +13,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static config.Config.*;
-import static config.Config.DATABASE_PASSWORD;
 
-@WebServlet(urlPatterns = "/MySqlToHDFS")
-public class MySqlToHDFS extends HttpServlet {
-    static final String URL = WEB_URL_BEGIN + "analyze/sqoop_mysql_to_hdfs.jsp";
+@WebServlet(urlPatterns = "/MySqlToHive")
+public class MySqlToHive extends HttpServlet {
+    static final String URL = WEB_URL_BEGIN + "analyze/sqoop_mysql_to_hive.jsp";
     int retryTime = 0;
     Result result = new Result();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String targetDir = request.getParameter("target_dir");
+        String hiveTable = request.getParameter("target_table");
         String fieldsTerminated = request.getParameter("fields_terminated");
         String linesTerminated = request.getParameter("lines_terminated");
         int mapNum = Integer.parseInt(request.getParameter("map_num"));
@@ -34,10 +33,13 @@ public class MySqlToHDFS extends HttpServlet {
                 " --table " + TABLE_NAME +
                 " --split-by imdb_title_id" +
                 " --m " + mapNum +
-                " --target-dir " + targetDir +
-                " --delete-target-dir" +
+                " --hive-import" +
+//                " --create-hive-table" +
+                " --hive-table " + HIVE_DATABASE + "." + hiveTable +
                 " --fields-terminated-by '" + fieldsTerminated + "'" +
-                " --lines-terminated-by '" + linesTerminated + "'";
+                " --lines-terminated-by '" + linesTerminated + "'" +
+                " --delete-target-dir --hive-overwrite";
+
         if (!"".equals(customParameters)) {
             sqoopCommand = sqoopCommand + " " + customParameters;
         }
@@ -47,11 +49,19 @@ public class MySqlToHDFS extends HttpServlet {
             System.out.println("run: " + sqoopCommand);
             String log = SqoopUtils.sqoopExec(sqoopCommand);
             Matcher flag = Pattern.compile("successfully").matcher(log);
-            if(flag.find()){
+            if (flag.find()) {
                 Matcher tran = Pattern.compile("Transferred (\\d+.\\d+) KB in (\\d+.\\d+) seconds").matcher(log);
                 if (tran.find() == true) {
                     result.setSize(tran.group(1));
                     result.setTime(tran.group(2));
+                }
+                Matcher time = Pattern.compile("Time taken: (\\d+.\\d+) seconds").matcher(log);
+                int matcher_start = 0;
+                while (time.find(matcher_start)) {
+                    result.setTime(
+                            String.valueOf(Double.parseDouble(time.group(1)) + Double.parseDouble(result.getTime()))
+                    );
+                    matcher_start = time.end();
                 }
                 Matcher m = Pattern.compile("Retrieved (\\d+) records.").matcher(log);
                 if (m.find() == true) {
@@ -59,8 +69,8 @@ public class MySqlToHDFS extends HttpServlet {
                 }
                 result.setRetry(String.valueOf(retryTime));
                 break;
-            }else {
-                retryTime ++;
+            } else {
+                retryTime++;
             }
         }
         System.out.println("----------------------------end----------------------------");

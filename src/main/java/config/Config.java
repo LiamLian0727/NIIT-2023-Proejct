@@ -34,6 +34,9 @@ public class Config {
     public static final String HDFS_USER = "root";
     public static final String PATH = "/";
 
+    // hive config
+    public static final String HIVE_DATABASE = "niit";
+
     // jdbc config
     public static final String JDBC = "com.mysql.jdbc.Driver";
     public static final String DATABASE_NAME = "niit";
@@ -42,14 +45,21 @@ public class Config {
             "?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&useSSL=false&rewriteBatchedStatements=true";
     public static final String DATABASE_USER = "root";
     public static final String DATABASE_PASSWORD = "niit1234";
-    public static final int BATCH_LINE = 500;
-    public static final int MAX_LINE = 10000;
+    public static final int BATCH_LINE = 50;
+    public static final int MAX_LINE = 100;
+    public static final String TABLE_NAME = "imdb_movies";
+
+    // http config
+    public static final int MAX_CONNECTION_TIMEOUT = 3 * 1000;
+    public static final int MAX_SO_TIMEOUT = 3*60*1000;
+
 
     // web config
     public static final String WEB_URL_BEGIN = "http://localhost:8080/Group1Project/";
     public static final int MEMORY_THRESHOLD = 1024 * 1024 * 3;
     public static final int MAX_FILE_SIZE = 1024 * 1024 * 50;
     public static final int MAX_REQUEST_SIZE = 1024 * 1024 * 60;
+    public static final int MAX_RETRY_TIME = 3;
 
 
 }
