@@ -23,6 +23,12 @@ public class Config {
 
     // sqoop config
     public static final String SQOOP_HOME = "/training/sqoop-1.4.6/bin/sqoop";
+    public static final String REX_TIME_AND_SIZE = "Transferred ((\\d+,)*\\d+.\\d+) ([KM])B in ((\\d+,)*\\d+.\\d+) seconds";
+    public static final String REX_RETRY = "Retrieved (\\d+) records.";
+
+    // flume config
+    public static final int HTTP_MAX_UPLODING_EVENT = 1000;
+    public static final String FLUME_URL = "http://niit:22222";
 
     // zookeeper config
     public static final String ZOOKEEPER_QUOEUM = "niit";
@@ -36,6 +42,7 @@ public class Config {
 
     // hive config
     public static final String HIVE_DATABASE = "niit";
+    public static final String REX_TIME = "Time taken: ((\\d+,)*\\d+.\\d+) seconds";
 
     // jdbc config
     public static final String JDBC = "com.mysql.jdbc.Driver";
@@ -45,8 +52,8 @@ public class Config {
             "?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&useSSL=false&rewriteBatchedStatements=true";
     public static final String DATABASE_USER = "root";
     public static final String DATABASE_PASSWORD = "niit1234";
-    public static final int BATCH_LINE = 50;
-    public static final int MAX_LINE = 100;
+    public static final int BATCH_LINE = 200;
+    public static final int MAX_LINE = 10000;
     public static final String TABLE_NAME = "imdb_movies";
 
     // http config

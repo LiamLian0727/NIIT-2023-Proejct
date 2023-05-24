@@ -20,6 +20,7 @@ public class MySqlToHDFS extends HttpServlet {
     static final String URL = WEB_URL_BEGIN + "analyze/sqoop_mysql_to_hdfs.jsp";
     int retryTime = 0;
     Result result = new Result();
+    Pattern pattern = Pattern.compile(",");
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String targetDir = request.getParameter("target_dir");
@@ -48,12 +49,16 @@ public class MySqlToHDFS extends HttpServlet {
             String log = SqoopUtils.sqoopExec(sqoopCommand);
             Matcher flag = Pattern.compile("successfully").matcher(log);
             if(flag.find()){
-                Matcher tran = Pattern.compile("Transferred (\\d+.\\d+) KB in (\\d+.\\d+) seconds").matcher(log);
+                Matcher tran = Pattern.compile(REX_TIME_AND_SIZE).matcher(log);
                 if (tran.find() == true) {
-                    result.setSize(tran.group(1));
-                    result.setTime(tran.group(2));
+                    double size = Double.parseDouble(pattern.matcher(tran.group(1)).replaceAll(""));
+                    if ("M".equals(tran.group(3))){
+                        size *= 1024;
+                    }
+                    result.setSize(String.valueOf(size));
+                    result.setTime(pattern.matcher(tran.group(4)).replaceAll(""));
                 }
-                Matcher m = Pattern.compile("Retrieved (\\d+) records.").matcher(log);
+                Matcher m = Pattern.compile(REX_RETRY).matcher(log);
                 if (m.find() == true) {
                     result.setCount(m.group(1));
                 }
@@ -65,6 +70,7 @@ public class MySqlToHDFS extends HttpServlet {
         }
         System.out.println("----------------------------end----------------------------");
 
+        System.out.println(result);
         request.getSession().setAttribute("Count", result.getCount());
         request.getSession().setAttribute("Time", result.getTime()); // second
         request.getSession().setAttribute("Size", result.getSize()); // KB

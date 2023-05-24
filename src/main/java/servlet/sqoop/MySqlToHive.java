@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,6 +20,7 @@ public class MySqlToHive extends HttpServlet {
     static final String URL = WEB_URL_BEGIN + "analyze/sqoop_mysql_to_hive.jsp";
     int retryTime = 0;
     Result result = new Result();
+    Pattern pattern = Pattern.compile(",");
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String hiveTable = request.getParameter("target_table");
@@ -26,7 +28,7 @@ public class MySqlToHive extends HttpServlet {
         String linesTerminated = request.getParameter("lines_terminated");
         int mapNum = Integer.parseInt(request.getParameter("map_num"));
         String customParameters = request.getParameter("custom_parameters");
-
+        HttpSession session = request.getSession();
         String sqoopCommand = SQOOP_HOME + " import --connect " + JDBC_URL +
                 " --username " + DATABASE_USER +
                 " --password " + DATABASE_PASSWORD +
@@ -50,20 +52,27 @@ public class MySqlToHive extends HttpServlet {
             String log = SqoopUtils.sqoopExec(sqoopCommand);
             Matcher flag = Pattern.compile("successfully").matcher(log);
             if (flag.find()) {
-                Matcher tran = Pattern.compile("Transferred (\\d+.\\d+) KB in (\\d+.\\d+) seconds").matcher(log);
+                Matcher tran = Pattern.compile(REX_TIME_AND_SIZE).matcher(log);
                 if (tran.find() == true) {
-                    result.setSize(tran.group(1));
-                    result.setTime(tran.group(2));
+                    double size = Double.parseDouble(pattern.matcher(tran.group(1)).replaceAll(""));
+                    if ("M".equals(tran.group(3))){
+                        size *= 1024;
+                    }
+                    result.setSize(String.valueOf(size));
+                    result.setTime(pattern.matcher(tran.group(4)).replaceAll(""));
                 }
-                Matcher time = Pattern.compile("Time taken: (\\d+.\\d+) seconds").matcher(log);
+                Matcher time = Pattern.compile(REX_TIME).matcher(log);
                 int matcher_start = 0;
                 while (time.find(matcher_start)) {
                     result.setTime(
-                            String.valueOf(Double.parseDouble(time.group(1)) + Double.parseDouble(result.getTime()))
+                            String.valueOf(
+                                    Double.parseDouble(pattern.matcher(tran.group(1)).replaceAll(""))
+                                            + Double.parseDouble(result.getTime())
+                            )
                     );
                     matcher_start = time.end();
                 }
-                Matcher m = Pattern.compile("Retrieved (\\d+) records.").matcher(log);
+                Matcher m = Pattern.compile(REX_RETRY).matcher(log);
                 if (m.find() == true) {
                     result.setCount(m.group(1));
                 }
@@ -74,11 +83,11 @@ public class MySqlToHive extends HttpServlet {
             }
         }
         System.out.println("----------------------------end----------------------------");
-
-        request.getSession().setAttribute("Count", result.getCount());
-        request.getSession().setAttribute("Time", result.getTime()); // second
-        request.getSession().setAttribute("Size", result.getSize()); // KB
-        request.getSession().setAttribute("Retry", result.getRetry());
+        System.out.println(result);
+        session.setAttribute("Count", result.getCount());
+        session.setAttribute("Time", result.getTime()); // second
+        session.setAttribute("Size", result.getSize()); // KB
+        session.setAttribute("Retry", result.getRetry());
         response.sendRedirect(URL + "?status=true");
     }
 

@@ -67,7 +67,7 @@
             },
             series: [
                 {
-                    name: 'Count',
+                    name: 'Number of rows transmitted',
                     type: 'gauge',
                     progress: {
                         show: true
@@ -77,7 +77,7 @@
                         formatter: '{value}'
                     },
                     min:0,
-                    max:500,
+                    max:10000,
                     data: [
                         {
                             value: count,
@@ -88,7 +88,7 @@
                     center: ['25%', '30%'],
                 },
                 {
-                    name: 'Time',
+                    name: 'Time spent',
                     type: 'gauge',
                     progress: {
                         show: true
@@ -99,10 +99,10 @@
                     },
 
                     min:0,
-                    max:50,
+                    max:100,
                     data: [
                         {
-                            value: time,
+                            value: time.toFixed(2),
                             name: 'Time'
                         }
                     ],
@@ -110,20 +110,20 @@
                     center: ['75%', '30%'],
                 },
                 {
-                    name: 'Size',
+                    name: 'Amount of data transmitted',
                     type: 'gauge',
                     progress: {
                         show: true
                     },
                     detail: {
                         valueAnimation: true,
-                        formatter: '{value}KB'
+                        formatter: '{value}MB'
                     },
                     min:0,
                     max:100,
                     data: [
                         {
-                            value: size,
+                            value: Number(size / 1024).toFixed(2),
                             name: 'Size'
                         }
                     ],
@@ -131,7 +131,7 @@
                     center: ['25%', '75%'],
                 },
                 {
-                    name: 'Retry',
+                    name: 'Retry times',
                     type: 'gauge',
                     progress: {
                         show: true

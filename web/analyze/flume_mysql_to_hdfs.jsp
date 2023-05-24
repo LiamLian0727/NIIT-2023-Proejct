@@ -14,10 +14,9 @@
 <jsp:include page="navigationBar.jsp"></jsp:include>
 <div>
     <div class="divs" id="left" style="width:30%;float:left;">
-        <form class="forms" action="../MySqlToHDFS" method="post">
+        <form class="forms" action="../FMySqlToHDFS" method="post">
             <h1 class="h">To HDFS</h1><br>
             <h2 class="h">Fields:</h2><input class="inputs" type="text" name="fields_terminated"><br>
-            <h2 class="h">Lines:</h2><input class="inputs" type="text" name="lines_terminated"><br>
             <input type="submit" value="run"><br><br><br>
         </form>
     </div>
@@ -57,7 +56,7 @@
             },
             series: [
                 {
-                    name: 'Count',
+                    name: 'Number of events sent',
                     type: 'gauge',
                     progress: {
                         show: true
@@ -67,18 +66,18 @@
                         formatter: '{value}'
                     },
                     min:0,
-                    max:500,
+                    max:10000,
                     data: [
                         {
                             value: count,
                             name: 'Count'
                         }
                     ],
-                    radius: '55%',
+                    radius: '53%',
                     center: ['25%', '30%'],
                 },
                 {
-                    name: 'Time',
+                    name: 'Time spent',
                     type: 'gauge',
                     progress: {
                         show: true
@@ -89,39 +88,39 @@
                     },
 
                     min:0,
-                    max:50,
+                    max:100,
                     data: [
                         {
-                            value: time,
+                            value: time.toFixed(2),
                             name: 'Time'
                         }
                     ],
-                    radius: '55%',
+                    radius: '53%',
                     center: ['75%', '30%'],
                 },
                 {
-                    name: 'Size',
+                    name: 'Amount of data transmitted',
                     type: 'gauge',
                     progress: {
                         show: true
                     },
                     detail: {
                         valueAnimation: true,
-                        formatter: '{value}KB'
+                        formatter: '{value}MB'
                     },
                     min:0,
-                    max:100,
+                    max:50,
                     data: [
                         {
-                            value: size,
+                            value: size.toFixed(2),
                             name: 'Size'
                         }
                     ],
-                    radius: '55%',
+                    radius: '53%',
                     center: ['25%', '75%'],
                 },
                 {
-                    name: 'Retry',
+                    name: 'Number of Http requests sent',
                     type: 'gauge',
                     progress: {
                         show: true
@@ -131,14 +130,14 @@
                         formatter: '{value}'
                     },
                     min:0,
-                    max:3,
+                    max:20,
                     data: [
                         {
                             value: retry,
-                            name: 'Retry'
+                            name: 'Http'
                         }
                     ],
-                    radius: '55%',
+                    radius: '53%',
                     center: ['75%', '75%'],
                 }
             ]
