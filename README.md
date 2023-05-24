@@ -23,7 +23,13 @@ start-all.sh
 cd flume
 flume-ng agent -n agent -f flume/http-conf.properties
 ```
+The default maximum heap memory size when flume starts is 20M, and OOM problems are easy to occur when the amount of data in the actual environment is large, which is added in the flume-env.sh under the basic configuration file conf of flume
 
+export JAVA_OPTS="-Xms2048m -Xmx2048m -Xss256k -Xmn1g -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:-UseGCOverheadLimit"
+
+And in the flume startup script flume-ng, modify JAVA_OPTS="-Xmx20m" to JAVA_OPTS="-Xmx2048m"
+
+Here we jump the threshold of heap memory to 2G, which can be adjusted according to the specific hardware situation in the actual production environment
 ***Make by 2023/4/26***
  
 
