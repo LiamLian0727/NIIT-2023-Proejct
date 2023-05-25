@@ -194,7 +194,7 @@ section {
     text-transform: lowercase;
 }
 
-input[type=submit] {
+.run {
     width: 100%;
     background-color: #6b74c4;
     color: white;
@@ -205,8 +205,7 @@ input[type=submit] {
     cursor: pointer;
 }
 
-
-input[type=submit]:hover {
+.run:hover {
     background-color: #213b82;
 }
 

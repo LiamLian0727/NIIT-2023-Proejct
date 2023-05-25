@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 
 /**
  * @description:
- * @author: qianghaohao
+ * @author: opensource
  * @time: 2021/3/28
  */
 public class SSHShellUtils {

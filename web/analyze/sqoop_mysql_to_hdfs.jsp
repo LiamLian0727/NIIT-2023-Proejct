@@ -24,11 +24,11 @@
         <form class="forms" action="../MySqlToHDFS" method="post">
             <h1 class="h">To HDFS</h1><br>
             <h2 class="h">Dir:</h2><input class="inputs" type="text" name="target_dir"><br>
-            <h2 class="h">Map:</h2><input class="inputs" type="number" name="map_num"><br>
+            <h2 class="h">Map:</h2><input class="inputs" min="1" type="number" name="map_num"><br>
             <h2 class="h">Fields:</h2><input class="inputs" type="text" name="fields_terminated"><br>
             <h2 class="h">Lines:</h2><input class="inputs" type="text" name="lines_terminated"><br>
             <h2 class="h">Custom:</h2><input class="inputs" type="text" name="custom_parameters"><br>
-            <input type="submit" value="run"><br><br><br>
+            <input class="run" type="submit" value="run"><br><br><br>
         </form>
     </div>
     <div class="divs" id="right" style="width:70%;float:left;">
@@ -120,7 +120,7 @@
                         formatter: '{value}MB'
                     },
                     min:0,
-                    max:100,
+                    max:50,
                     data: [
                         {
                             value: Number(size / 1024).toFixed(2),

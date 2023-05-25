@@ -17,7 +17,7 @@
         <form class="forms" action="../FMySqlToHDFS" method="post">
             <h1 class="h">To HDFS</h1><br>
             <h2 class="h">Fields:</h2><input class="inputs" type="text" name="fields_terminated"><br>
-            <input type="submit" value="run"><br><br><br>
+            <input class="run" type="submit" value="run"><br><br><br>
         </form>
     </div>
     <div class="divs" id="right" style="width:70%;float:left;">

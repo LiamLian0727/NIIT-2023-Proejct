@@ -8,58 +8,59 @@ import utils.FlumeUtils;
 import utils.MySqlUtils;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import static config.Config.*;
 
 @WebServlet(urlPatterns = "/FWindowToHDFS")
+@MultipartConfig
 public class FWindowsToHDFS extends HttpServlet {
     private static final String URL = WEB_URL_BEGIN + "analyze/flume_window_to_hdfs.jsp";
-    Result result = new Result();
+    private static final String KV[] = {"fup", "success"};
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if (!ServletFileUpload.isMultipartContent(request)) { // 如果不是则停止
-            PrintWriter writer = response.getWriter();
-            writer.println("Error: form must have enctype=multipart/form-data");
-            writer.flush();
-            return;
-        }
-        DiskFileItemFactory factory = new DiskFileItemFactory();
-        factory.setSizeThreshold(MEMORY_THRESHOLD);
-        factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
-        ServletFileUpload upload = new ServletFileUpload(factory);
-        upload.setFileSizeMax(MAX_FILE_SIZE);
-        upload.setSizeMax(MAX_REQUEST_SIZE);
-        upload.setHeaderEncoding("UTF-8");
 
-        try {
-            List<FileItem> formItems = upload.parseRequest(request);
-            if (formItems != null && formItems.size() > 0) {
-                for (FileItem item : formItems) {
-                    if (!item.isFormField()) {
-                        String fileName = new File(item.getName()).getName();
-                        result = FlumeUtils.putFilesInToHDFS(item.getInputStream(), fileName);
-                    }
+        long event = 0, httpPost = 0;
+        double time = 0, size = 0;
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+        HttpSession session = request.getSession();
+        List<Result> results = new ArrayList<>();
+        Collection<Part> parts = request.getParts();
+
+        for (Part p : parts) {
+            if(p.getSubmittedFileName()!=null){
+                try {
+                    results.add(FlumeUtils.putFilesInToHDFS(p.getInputStream(), p.getSubmittedFileName()));
+                } catch (SQLException | ClassNotFoundException throwables) {
+                    throwables.printStackTrace();
                 }
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
 
-        System.out.println(result);
-        session.setAttribute("Count", result.getCount());
-        session.setAttribute("Time", result.getTime()); // second
-        session.setAttribute("Size", result.getSize()); // KB
-        session.setAttribute("Retry", result.getRetry());
+        for (Result result : results) {
+            System.out.println(result);
+            event += Long.parseLong(result.getCount());
+            httpPost += Long.parseLong(result.getRetry());
+            time += Double.parseDouble(result.getTime());
+            size += Double.parseDouble(result.getSize());
+        }
+
+        session.setAttribute("Count", event);
+        session.setAttribute("Time", time); // second
+        session.setAttribute("Size", size); // KB
+        session.setAttribute("Retry", httpPost);
         response.sendRedirect(URL + "?status=true");
 
     }

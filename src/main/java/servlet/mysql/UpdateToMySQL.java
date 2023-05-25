@@ -71,7 +71,6 @@ public class UpdateToMySQL extends HttpServlet {
                     for (FileItem item : formItems) {
                         if (!item.isFormField()) {
                             String fileName = new File(item.getName()).getName();
-
                             if (MySqlUtils.putFilesInToMySQL(item.getInputStream(), fileName)) {
                                 session.setAttribute(KV[0], KV[1]);
                             } else {
@@ -86,8 +85,6 @@ public class UpdateToMySQL extends HttpServlet {
             }
         }
         response.sendRedirect(URL);
-
-
     }
 
     @Override

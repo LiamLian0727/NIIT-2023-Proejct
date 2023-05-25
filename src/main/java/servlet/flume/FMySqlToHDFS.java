@@ -56,9 +56,10 @@ public class FMySqlToHDFS extends HttpServlet {
                     String str = JSON.toJSONString(list);
                     System.out.println(str);
                     String resultData = HttpUtils.sendPostWithJson(FLUME_URL, str, headers);
-                    System.out.println(resultData);
+//                    System.out.println(resultData);
                     httpTime ++;
                     httpSize += RamUsageEstimator.sizeOf(str);
+                    list = new ArrayList<Map<String, String>>();
                 }
             }
             if(idx % HTTP_MAX_UPLODING_EVENT != 0){

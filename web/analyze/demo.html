@@ -1,0 +1,286 @@
+<html>
+<head>
+    <title>Title</title>
+    <link rel="stylesheet" href="css/styleA.css">
+    <style>
+        .b1{
+            height: 50px;
+            width: 170px;
+        }
+
+        .b1 button{
+            height:100%;
+            width:100%;
+            border:none;
+            outline:none;
+            background: #949de0;
+            /*按钮字体颜色*/
+            color:#fff;
+            border-radius: 5px;
+            font-size: 18px;
+            letter-spacing: 1px;
+            font-weight: 500;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition:all 0.3s ease;
+        }
+
+        .b1 button:hover{
+            background: #213b82;
+        }
+
+        .filename{
+            width:145px;
+            position: relative;
+            background: #949de0;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 5px;
+            margin-top: 15px;
+            display:none;
+        }
+
+        .filename:before{
+            position: absolute;
+            content: '';
+            height: 15px;
+            width:15px;
+            background:#949de0;
+            left:65px;
+            top:2%;
+            /*尖尖气泡*/
+            transform: translateY(-50%) rotate(45deg);
+        }
+
+        .sub1 {
+            display: block;
+            position: relative;
+            cursor: pointer;
+            border-radius: 10px;
+            margin-top: 5px;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 25px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            border: none;
+            color: #fff;
+            background-color: #949de0;
+            }
+        .sub1:hover {
+            background: #7867cf;
+        }
+    </style>
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="袁蕾">
+    <title>Movie View</title>
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="../css/styleA.css">
+
+</head>
+<body>
+
+<!-- header section starts  -->
+<header>
+    <div class="header-2">
+
+        <div id="menu-bar"></div>
+
+        <nav class="navbar">
+            <a href="index.jsp">home</a>
+            <a href="sqoop_mysql_to_hdfs.jsp">ToHDFS</a>
+            <a href="sqoop_mysql_to_hive.jsp">ToHive</a>
+            <a href="flume_mysql_to_hdfs.jsp">UpMySQL</a>
+            <a href="flume_window_to_hdfs.jsp">UpLog</a>
+        </nav>
+
+        <div class="dropdown">
+            <button class="dropbtn">1</button>
+            <div class="dropdown-content">
+                <a href="../Exit">Exit</a>
+            </div>
+        </div>
+
+    </div>
+
+</header>
+
+</body>
+</html>
+<div>
+    <div class="divs" id="left" style="width:30%;float:left;">
+        <form class="forms" action="../MySqlToHDFS" method="post">
+            <h1 class="h">To HDFS</h1><br>
+            <h2 class="h">File:</h2>
+
+            <input id="default1" type="file" onclick="alert(2)"/>
+            <div class="b1">
+                <button onclick="active()" id="view1">Choose a file</button>
+            </div>
+            <div class="filename">No file chosen</div>
+
+            <input class="sub1" type="submit" value="run"><br><br><br>
+        </form>
+    </div>
+    <div class="divs" id="right" style="width:70%;float:left;">
+        <div id="main" style="width: 100%;">
+            <img src="background.jpg" style="width: 100%">
+        </div>
+    </div>
+</div>
+
+<script>
+    const defaultBtn = document.querySelector("#default1");
+    const viewBtn = document.querySelector("#view1");
+    const fileName = document.querySelector(".filename");
+    let regExp = /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;
+    function active() {
+        alert(1)
+        defaultBtn.click();
+    }
+    defaultBtn.addEventListener("change",function () {
+        if(defaultBtn.value){
+            let nameValue = this.value.match(regExp);
+            fileName.style.display = "block";
+            fileName.textContent = nameValue;
+            // 选择文件后显示文件名
+        }else {
+            fileName.style.display = "block";
+            fileName.textContent = "No file chosen";
+        }
+    });
+</script>
+
+<!-- <script src="../js/echarts.min.js"></script>
+<script type="text/javascript">
+
+    let query = window.location.search.substring(1);
+    let pair = query.split("=");
+    if (pair[1] === 'true') {
+        let count = ${Count};
+        let time = ${Time};
+        let size = ${Size};
+        let retry = ${Retry};
+
+        console.log(count, time, size, retry)
+
+        let dom = document.getElementById('main');
+        let myChart = echarts.init(dom, null, {
+            width: 800,
+            height: 600
+        });
+
+        option = {
+            legend: {},
+            tooltip: {},
+            axisLine: {
+                lineStyle: {
+                    color: [[0.2, '#93CDDD'], [0.4, '#c23531'], [0.6, '#63869e'], [0.8, '#B3A2C7'], [1, '#91c7ae']]
+                }
+            },
+            series: [
+                {
+                    name: 'Count',
+                    type: 'gauge',
+                    progress: {
+                        show: true
+                    },
+                    detail: {
+                        valueAnimation: true,
+                        formatter: '{value}'
+                    },
+                    min:0,
+                    max:500,
+                    data: [
+                        {
+                            value: count,
+                            name: 'Count'
+                        }
+                    ],
+                    radius: '55%',
+                    center: ['25%', '30%'],
+                },
+                {
+                    name: 'Time',
+                    type: 'gauge',
+                    progress: {
+                        show: true
+                    },
+                    detail: {
+                        valueAnimation: true,
+                        formatter: '{value}s'
+                    },
+
+                    min:0,
+                    max:50,
+                    data: [
+                        {
+                            value: time,
+                            name: 'Time'
+                        }
+                    ],
+                    radius: '55%',
+                    center: ['75%', '30%'],
+                },
+                {
+                    name: 'Size',
+                    type: 'gauge',
+                    progress: {
+                        show: true
+                    },
+                    detail: {
+                        valueAnimation: true,
+                        formatter: '{value}KB'
+                    },
+                    min:0,
+                    max:100,
+                    data: [
+                        {
+                            value: size,
+                            name: 'Size'
+                        }
+                    ],
+                    radius: '55%',
+                    center: ['25%', '75%'],
+                },
+                {
+                    name: 'Retry',
+                    type: 'gauge',
+                    progress: {
+                        show: true
+                    },
+                    detail: {
+                        valueAnimation: true,
+                        formatter: '{value}'
+                    },
+                    min:0,
+                    max:3,
+                    data: [
+                        {
+                            value: retry,
+                            name: 'Retry'
+                        }
+                    ],
+                    radius: '55%',
+                    center: ['75%', '75%'],
+                }
+            ]
+        };
+
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    } else if (pair[1] === 'error') {
+        alert('error');
+    }
+
+</script> -->
+</body>
+</html>

@@ -28,7 +28,7 @@
             <h2 class="h">Fields:</h2><input class="inputs" type="text" name="fields_terminated"><br>
             <h2 class="h">Lines:</h2><input class="inputs" type="text" name="lines_terminated"><br>
             <h2 class="h">Custom:</h2><input class="inputs" type="text" name="custom_parameters"><br>
-            <input type="submit" value="run"><br><br><br>
+            <input class="run" type="submit" value="run"><br><br><br>
         </form>
     </div>
     <div class="divs" id="right" style="width:70%;float:left;">
@@ -76,8 +76,8 @@
                         valueAnimation: true,
                         formatter: '{value}'
                     },
-                    min:0,
-                    max:10000,
+                    min: 0,
+                    max: 10000,
                     data: [
                         {
                             value: count,
@@ -98,8 +98,8 @@
                         formatter: '{value}s'
                     },
 
-                    min:0,
-                    max:100,
+                    min: 0,
+                    max: 100,
                     data: [
                         {
                             value: time.toFixed(2),
@@ -119,11 +119,11 @@
                         valueAnimation: true,
                         formatter: '{value}MB'
                     },
-                    min:0,
-                    max:100,
+                    min: 0,
+                    max: 50,
                     data: [
                         {
-                            value:  Number(size / 1024).toFixed(2),
+                            value: Number(size / 1024).toFixed(2),
                             name: 'Size'
                         }
                     ],
@@ -140,8 +140,8 @@
                         valueAnimation: true,
                         formatter: '{value}'
                     },
-                    min:0,
-                    max:3,
+                    min: 0,
+                    max: 3,
                     data: [
                         {
                             value: retry,
