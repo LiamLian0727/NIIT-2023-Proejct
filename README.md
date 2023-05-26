@@ -37,6 +37,8 @@ JAVA_OPTS="-Xmx20m" to JAVA_OPTS="-Xmx2048m"
 
 Here we jump the threshold of heap memory to 2G, which can be adjusted according to the specific hardware situation in the actual production environment
 
+**Last: strat the web**
+Deploy our project on tomcat web server by packaging the code into war packages etc. We use IDEA's deployment feature. So here is not a demo
 
 ***Make by 2023/4/26***
  
